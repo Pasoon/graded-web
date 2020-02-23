@@ -17,6 +17,15 @@ const UserSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
+  courses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'course'
+    }
+  ],
+  grade: {
+    type: Number
+  },
   date: {
     type: Date,
     default: Date.now
