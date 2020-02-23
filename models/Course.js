@@ -14,10 +14,16 @@ const CourseSchema = new mongoose.Schema({
     required: true
   },
   gradeletter: {
-    type: String
+    type: String,
+    default: 'N/A'
   },
   grade: {
-    type: String
+    type: Number,
+    default: 0
+  },
+  percentcomplete: {
+    type: Number,
+    default: 0
   },
   deliverables: [
     {

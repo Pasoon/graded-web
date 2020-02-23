@@ -14,7 +14,8 @@ const DeliverableSchema = new mongoose.Schema({
     required: true
   },
   grade: {
-    type: number
+    type: Number,
+    default: 0
   },
   date: {
     type: Date,
