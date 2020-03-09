@@ -49,4 +49,25 @@ router.post(
   }
 );
 
+// @route   GET api/deliverables/:courseId
+// @desc    Get all courses deliverables
+// @access  Private
+router.get('/:courseId', [auth], async (req, res) => {
+  try {
+    const deliverables = await Deliverable.find({
+      course: req.params.courseId
+    });
+    if (!deliverables) {
+      return res.status(404).json({ msg: 'deliverables not found' });
+    }
+    res.json(deliverables);
+  } catch (err) {
+    console.error(err.message);
+    if (!err.kind == 'ObjectId') {
+      return res.status(404).json({ msg: 'deliverables not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;
