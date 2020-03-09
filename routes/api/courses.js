@@ -80,4 +80,25 @@ router.post(
   }
 );
 
+// @route   DELETE api/course/:id
+// @desc    Delete a course
+// @access  Private
+router.delete('/:id', [auth], async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    //Check user
+    if (course.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+    await course.remove();
+    res.json({ msg: 'Course removed' });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(404).json({ msg: 'Course not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;

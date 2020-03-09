@@ -63,7 +63,27 @@ router.get('/:courseId', [auth], async (req, res) => {
     res.json(deliverables);
   } catch (err) {
     console.error(err.message);
-    if (!err.kind == 'ObjectId') {
+    if (err.kind == 'ObjectId') {
+      return res.status(404).json({ msg: 'deliverables not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   DELETE api/deliverables/:id
+// @desc    Delete a deliverable
+// @access  Private
+router.delete('/:id', [auth], async (req, res) => {
+  try {
+    const deliverable = await Deliverable.findById(req.params.id);
+    if (!deliverable) {
+      return res.status(404).json({ msg: 'deliverable not found' });
+    }
+    await deliverable.remove();
+    res.json({ msg: 'Deliverable removed' });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
       return res.status(404).json({ msg: 'deliverables not found' });
     }
     res.status(500).send('Server Error');
