@@ -17,6 +17,11 @@ const DeliverableSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  weight: {
+    type: Number,
+    default: 0,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now

@@ -4,6 +4,7 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 
 const User = require('../../models/User');
@@ -84,5 +85,33 @@ router.post(
     }
   }
 );
+
+// // @route   GET api/users/
+// // @desc    Get all users
+// // @access  Private
+// router.get('/', async (req, res) => {
+//   try {
+//     const users = await User.find().populate('user', ['name', 'avatar']);
+//     res.json(users);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send('Server Error');
+//   }
+// });
+
+// @route   DELETE api/users/
+// @desc    Delete user, courses and deliverables
+// @access  Private
+router.delete('/', auth, async (req, res) => {
+  try {
+    // Remove User
+    await User.findOneAndRemove({ _id: req.user.id });
+
+    res.json({ msg: 'User deleted' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;
