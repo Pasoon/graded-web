@@ -13,7 +13,7 @@ router.get('/me', auth, async (req, res) => {
   try {
     const courses = await Course.find({ user: req.user.id });
 
-    if (Array.isArray(courses)) {
+    if (courses.length < 1) {
       return res
         .status(400)
         .json({ msg: 'There are no courses for this user' });
