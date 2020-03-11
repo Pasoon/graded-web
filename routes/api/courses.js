@@ -100,11 +100,19 @@ router.patch('/:id', [auth], async (req, res) => {
     if (course.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
-    await course.updateOne(req.params.id, {
-      name: req.body.name,
-      code: req.body.code
+
+    var body = {};
+    if (req.body.name) body.name = req.body.name;
+    if (req.body.code) body.code = req.body.code;
+    if (req.body.grade) body.grade = req.body.grade;
+    if (req.body.gradeletter) body.gradeletter = req.body.gradeletter;
+    if (req.body.percentcomplete)
+      body.percentcomplete = req.body.percentcomplete;
+
+    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, body, {
+      new: true
     });
-    res.json(course);
+    res.json(updatedCourse);
   } catch (err) {
     console.error(err.message);
     if (err.kind == 'ObjectId') {

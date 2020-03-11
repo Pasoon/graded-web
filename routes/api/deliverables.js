@@ -99,34 +99,20 @@ router.patch('/:id', [auth], async (req, res) => {
     if (!deliverable) {
       return res.status(404).json({ msg: 'deliverable not found' });
     }
-    await deliverable.updateOne(req.params.id, {
-      name: req.body.name,
-      type: req.body.type,
-      weight: req.body.weight
-    });
-    res.json(deliverable);
-  } catch (err) {
-    console.error(err.message);
-    if (err.kind == 'ObjectId') {
-      return res.status(404).json({ msg: 'deliverable not found' });
-    }
-    res.status(500).send('Server Error');
-  }
-});
+    var body = {};
+    if (req.body.name) body.name = req.body.name;
+    if (req.body.type) body.type = req.body.type;
+    if (req.body.weight) body.weight = req.body.weight;
+    if (req.body.grade) body.grade = req.body.grade;
 
-// @route   PATCH api/deliverables/grade/:id
-// @desc    Update deliverables grade
-// @access  Private
-router.put('/grade/:id', [auth], async (req, res) => {
-  try {
-    const deliverable = await Deliverable.findById(req.params.id);
-    if (!deliverable) {
-      return res.status(404).json({ msg: 'deliverable not found' });
-    }
-    await deliverable.updateOne(req.params.id, {
-      grade: req.body.grade
-    });
-    res.json(deliverable.grade);
+    const updatedDeliverable = await Deliverable.findByIdAndUpdate(
+      req.params.id,
+      body,
+      {
+        new: true
+      }
+    );
+    res.json(updatedDeliverable);
   } catch (err) {
     console.error(err.message);
     if (err.kind == 'ObjectId') {
