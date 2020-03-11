@@ -58,17 +58,6 @@ router.post(
 
     try {
       let course = Course.findOne({ user: req.user.id });
-      // if (course) {
-      //   //Update
-      //   course = await Course.findOneAndUpdate(
-      //     { user: req.user.id },
-      //     { $set: courseFields },
-      //     { new: true }
-      //   );
-
-      //   return res.json(course);
-      // }
-
       // Create
       course = new Course(courseFields);
       await course.save();
@@ -96,6 +85,30 @@ router.delete('/:id', [auth], async (req, res) => {
     console.error(err.message);
     if (err.kind == 'ObjectId') {
       return res.status(404).json({ msg: 'Course not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   PATCH api/courses/:id
+// @desc    Edit a course
+// @access  Private
+router.patch('/:id', [auth], async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    //Check user
+    if (course.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+    await course.updateOne(req.params.id, {
+      name: req.body.name,
+      code: req.body.code
+    });
+    res.json(course);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(404).json({ msg: 'course not found' });
     }
     res.status(500).send('Server Error');
   }

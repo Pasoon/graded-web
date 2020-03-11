@@ -90,4 +90,40 @@ router.delete('/:id', [auth], async (req, res) => {
   }
 });
 
+// @route   PATCH api/deliverables/:id
+// @desc    Edit a deliverable
+// @access  Private
+router.patch('/:id', [auth], async (req, res) => {
+  try {
+    const deliverable = await Deliverable.findById(req.params.id);
+    if (!deliverable) {
+      return res.status(404).json({ msg: 'deliverable not found' });
+    }
+    await deliverable.updateOne(req.params.id, {
+      name: req.name,
+      type: req.type,
+      weight: req.weight
+    });
+    res.json(deliverable);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == 'ObjectId') {
+      return res.status(404).json({ msg: 'deliverable not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   PUT api/deliverables/grade/:id
+// @desc    Update deliverables grade
+// @access  Private
+router.put('/grade/:id', [auth], async (req, res) => {
+  try {
+    const deliverable = await Deliverable.findById(req.params.id);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;
