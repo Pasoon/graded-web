@@ -7,14 +7,14 @@ const Navbar = () => {
   return (
     <StyledNavbar>
       <h1>
-        <Link to='/'>Graded</Link>
+        <StyledLink to='/'>Graded</StyledLink>
       </h1>
       <Ul>
         <Li>
-          <Link to='/register'>Register</Link>
+          <StyledLink to='/register'>Register</StyledLink>
         </Li>
         <Li>
-          <Link to='/login'>Login</Link>
+          <StyledLink to='/login'>Login</StyledLink>
         </Li>
       </Ul>
     </StyledNavbar>
@@ -49,9 +49,12 @@ const Ul = styled.ul`
 `;
 
 const Li = styled.li`
-  display: flex;
   margin: 5px;
   list-style: none;
+`;
+
+const StyledLink = styled(Link)`
+  color: white;
 `;
 
 export default Navbar;

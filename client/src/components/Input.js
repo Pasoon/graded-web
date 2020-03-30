@@ -21,6 +21,7 @@ const StyledContainer = styled.div`
   &:hover {
     box-shadow: 0px 5px 10px 0px rgba(173, 173, 173, 1);
   }
+  margin-top: 10px;
 `;
 
 const StyledInput = styled.input`
@@ -39,15 +40,4 @@ const StyledInput = styled.input`
     opacity: 0.5; /* Firefox */
   }
   height: 35px;
-`;
-
-const StyledLabel = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  width: 65px;
-  height: 35px;
-  background-color: ${colors.primaryAccent};
-  border-radius: 20px 0 0 20px;
 `;
