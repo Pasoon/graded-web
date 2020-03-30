@@ -2,6 +2,8 @@ import React, { Fragment, useState } from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -19,12 +21,31 @@ const Register = () => {
       [e.target.name]: e.target.value
     });
 
-  const onRegister = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (password != password2) {
       console.log('Passwords do not match!');
     } else {
-      console.log(formData);
+      console.log('Success');
+      // const newUser = {
+      //   name,
+      //   email,
+      //   password
+      // };
+      // try {
+      //   const config = {
+      //     headers: {
+      //       'Content-Type': 'Application/json'
+      //     }
+      //   };
+
+      //   const body = JSON.stringify(newUser);
+
+      //   const res = await axios.post('/api/users', body, config);
+      //   console.log(res.data);
+      // } catch (err) {
+      //   console.error(err.response.data);
+      // }
     }
   };
   return (
@@ -74,22 +95,17 @@ const Register = () => {
         </InputContainer>
         <Button
           id='button-register'
-          title='Register'
+          title='Sign Up'
           primary
-          handleClick={e => onRegister(e)}
+          handleClick={e => onSubmit(e)}
         />
+        <p>
+          Already have an account? <Link to='/login'>Login</Link>
+        </p>
       </FormContainer>
     </Fragment>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-`;
 
 const FormContainer = styled.div`
   display: flex;
