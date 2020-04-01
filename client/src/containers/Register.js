@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { setAlert } from '../actions/alert';
+import { register } from '../actions/auth';
 import PropTypes from 'prop-types';
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,28 +28,9 @@ const Register = ({ setAlert }) => {
   const onSubmit = async e => {
     e.preventDefault();
     if (password != password2) {
-      setAlert('Passwords do not match!', 'danger');
+      alert('Passwords do not match!'); // you would dispatch setAlert here
     } else {
-      console.log('Success');
-      // const newUser = {
-      //   name,
-      //   email,
-      //   password
-      // };
-      // try {
-      //   const config = {
-      //     headers: {
-      //       'Content-Type': 'Application/json'
-      //     }
-      //   };
-
-      //   const body = JSON.stringify(newUser);
-
-      //   const res = await axios.post('/api/users', body, config);
-      //   console.log(res.data);
-      // } catch (err) {
-      //   console.error(err.response.data);
-      // }
+      register({ name, email, password });
     }
   };
   return (
@@ -111,7 +93,8 @@ const Register = ({ setAlert }) => {
 };
 
 Register.propTyoes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
 };
 
 const FormContainer = styled.div`
