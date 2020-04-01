@@ -1,22 +1,39 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../styles/colors';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../actions/auth';
 
-const Navbar = () => {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  const authLinks = (
+    <Ul>
+      <Li>
+        <StyledA onClick={logout}>Logout</StyledA>
+      </Li>
+    </Ul>
+  );
+
+  const guestLinks = (
+    <Ul>
+      <Li>
+        <StyledLink to='/register'>Register</StyledLink>
+      </Li>
+      <Li>
+        <StyledLink to='/login'>Login</StyledLink>
+      </Li>
+    </Ul>
+  );
+
   return (
     <StyledNavbar>
       <h1>
-        <StyledLink to='/'>Graded</StyledLink>
+        <StyledLink to='!#'>Graded</StyledLink>
       </h1>
-      <Ul>
-        <Li>
-          <StyledLink to='/register'>Register</StyledLink>
-        </Li>
-        <Li>
-          <StyledLink to='/login'>Login</StyledLink>
-        </Li>
-      </Ul>
+      {!loading && (
+        <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+      )}
     </StyledNavbar>
   );
 };
@@ -53,8 +70,22 @@ const Li = styled.li`
   list-style: none;
 `;
 
-const StyledLink = styled(Link)`
+const StyledA = styled.a`
   color: white;
 `;
 
-export default Navbar;
+const StyledLink = styled(Link)`
+  color: white;
+  cursor: pointer;
+`;
+
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);
