@@ -4,8 +4,11 @@ import Button from '../components/Button';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { setAlert } from '../actions/alert';
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,7 +27,7 @@ const Register = () => {
   const onSubmit = async e => {
     e.preventDefault();
     if (password != password2) {
-      console.log('Passwords do not match!');
+      setAlert('Passwords do not match!', 'danger');
     } else {
       console.log('Success');
       // const newUser = {
@@ -107,6 +110,10 @@ const Register = () => {
   );
 };
 
+Register.propTyoes = {
+  setAlert: PropTypes.func.isRequired
+};
+
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -126,4 +133,4 @@ const InputTitle = styled.h5`
   width: 100%;
 `;
 
-export default Register;
+export default connect(null, { setAlert })(Register);

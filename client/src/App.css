@@ -62,3 +62,10 @@ a:visited {
 ::-webkit-scrollbar-thumb {
   background: grey;
 }
+
+:root {
+  --dark-color: #343a40;
+  --light-color: #f4f4f4;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+}

@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { SET_ALERT, REMOVE_ALERT } from './constants';
 
 export const setAlert = (msg, alertType) => dispatch => {
@@ -7,4 +7,6 @@ export const setAlert = (msg, alertType) => dispatch => {
     type: SET_ALERT,
     payload: { msg, alertType, id }
   });
+
+  setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), 5000); //remove alert after 5 seconds
 };

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Landing from './containers/Landing';
 import Register from './containers/Register';
 import Login from './containers/Login';
+import Alert from './components/Alert';
 import './App.css';
 
 //Redux
