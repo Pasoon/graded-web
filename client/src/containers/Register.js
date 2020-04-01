@@ -3,7 +3,6 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { setAlert } from '../actions/alert';
 import { register } from '../actions/auth';
@@ -92,7 +91,7 @@ const Register = ({ setAlert, register }) => {
   );
 };
 
-Register.propTyoes = {
+Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired
 };
@@ -116,4 +115,4 @@ const InputTitle = styled.h5`
   width: 100%;
 `;
 
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
