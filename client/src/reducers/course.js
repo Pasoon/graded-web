@@ -1,4 +1,4 @@
-import { GET_COURSES, COURSE_ERROR } from '../actions/constants';
+import { GET_COURSES, CLEAR_COURSES, COURSE_ERROR } from '../actions/constants';
 
 const initialState = {
   course: null,
@@ -21,6 +21,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         error: payload,
+        loading: false
+      };
+    case CLEAR_COURSES:
+      return {
+        ...state,
+        courses: null,
         loading: false
       };
     default:
