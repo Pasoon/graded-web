@@ -29,7 +29,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
     <StyledNavbar>
       <h1>
-        <StyledLink to='!#'>Graded</StyledLink>
+        <StyledLink to='/dashboard'>Graded</StyledLink>
       </h1>
       {!loading && (
         <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
@@ -72,11 +72,11 @@ const Li = styled.li`
 
 const StyledA = styled.a`
   color: white;
+  cursor: pointer;
 `;
 
 const StyledLink = styled(Link)`
   color: white;
-  cursor: pointer;
 `;
 
 Navbar.propTypes = {

@@ -5,6 +5,8 @@ import Landing from './containers/Landing';
 import Register from './containers/Register';
 import Login from './containers/Login';
 import Alert from './components/Alert';
+import Dashboard from './containers/Dashboard';
+import PrivateRoute from './routing/PrivateRoute';
 
 import './App.css';
 
@@ -34,6 +36,7 @@ const App = () => {
             <Switch>
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
             </Switch>
           </section>
           {/* </Alert> */}
