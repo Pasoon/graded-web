@@ -18,7 +18,6 @@ router.get('/me', auth, async (req, res) => {
         .status(400)
         .json({ msg: 'There are no courses for this user' });
     }
-
     res.json(courses);
   } catch (err) {
     console.error(err.message);

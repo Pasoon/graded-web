@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCurrentUsersCourses } from '../actions/course';
 
-const Dashboard = props => {
+const Dashboard = ({ getCurrentUsersCourses, auth, courses }) => {
+  useEffect(() => {
+    getCurrentUsersCourses();
+  }, []);
   return <div>Dashboard</div>;
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  getCurrentUsersCourses: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  courses: PropTypes.object.isRequired
+};
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  courses: state.courses
+});
+
+export default connect(mapStateToProps, { getCurrentUsersCourses })(Dashboard);
