@@ -39,6 +39,7 @@ export const createCourse = (
     });
 
     if (!edit) {
+      alert('Course Created!'); //here you would actually dispatch setAlert function
       history.push('/dashboard');
     }
   } catch (err) {
