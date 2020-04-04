@@ -6,7 +6,7 @@ import { Redirect, Link } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
   return (
-    <Link to={'/edit-course/' + course._id}>
+    <Link to={'/course-page/' + course._id}>
       <Container>
         <Content>
           <Name>{course.name}</Name>

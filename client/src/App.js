@@ -8,6 +8,7 @@ import Alert from './components/Alert';
 import Dashboard from './containers/Dashboard';
 import CreateCourse from './containers/CreateCourse';
 import EditCourse from './containers/EditCourse';
+import CoursePage from './containers/CoursePage';
 import PrivateRoute from './routing/PrivateRoute';
 
 import './App.css';
@@ -42,12 +43,17 @@ const App = () => {
               <PrivateRoute
                 exact
                 path='/create-course'
-                component={CreateCourse} //this has to be private
+                component={CreateCourse}
               />
               <PrivateRoute
                 exact
                 path='/edit-course/:id'
-                component={EditCourse} //this has to be private
+                component={EditCourse}
+              />
+              <PrivateRoute
+                exact
+                path='/course-page/:id'
+                component={CoursePage}
               />
             </Switch>
           </section>
