@@ -18,3 +18,33 @@ export const getCurrentUsersCourses = () => async dispatch => {
     });
   }
 };
+
+//Create or Update Course
+export const createCourse = (
+  formData,
+  history,
+  edit = false
+) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const res = await axios.post('/api/courses', formData, config);
+
+    dispatch({
+      type: GET_COURSES,
+      payload: res.data
+    });
+
+    if (!edit) {
+      history.push('/dashboard');
+    }
+  } catch (err) {
+    dispatch({
+      type: COURSE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
