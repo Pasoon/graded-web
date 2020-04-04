@@ -6,6 +6,7 @@ import Register from './containers/Register';
 import Login from './containers/Login';
 import Alert from './components/Alert';
 import Dashboard from './containers/Dashboard';
+import CreateCourse from './containers/CreateCourse';
 import PrivateRoute from './routing/PrivateRoute';
 
 import './App.css';
@@ -37,6 +38,11 @@ const App = () => {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <Route
+                exact
+                path='/create-course'
+                component={CreateCourse} //this has to be private
+              />
             </Switch>
           </section>
           {/* </Alert> */}
