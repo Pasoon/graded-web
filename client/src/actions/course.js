@@ -39,13 +39,13 @@ export const createCourse = (
     });
 
     if (!edit) {
-      alert('Course Created!'); //here you would actually dispatch setAlert function
+      //alert('Course Created!'); //here you would actually dispatch setAlert function
       history.push('/dashboard');
     }
   } catch (err) {
     dispatch({
       type: COURSE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response, status: err.response }
     });
   }
 };

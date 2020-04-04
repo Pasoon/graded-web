@@ -2,22 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import colors from '../styles/colors';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
-const courseCard = ({ course }) => {
+const CourseCard = ({ course }) => {
   return (
-    <div onClick={() => {}}>
+    <Link to={'/edit-course/' + course._id}>
       <Container>
         <Content>
-          <Title>{course.name}</Title>
-          <Grade>A+</Grade>
+          <Name>{course.name}</Name>
+          <Code>{course.code}</Code>
+          <Grade>{course.gradeletter}</Grade>
         </Content>
       </Container>
-    </div>
+    </Link>
   );
 };
 
-courseCard.propTypes = {
+CourseCard.propTypes = {
   course: PropTypes.object.isRequired
 };
 
@@ -38,11 +39,13 @@ const Container = styled.div`
   }
 `;
 
-const Grade = styled.p`
+const Grade = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 150px;
   width: 100%;
   text-align: center;
-  font-size: 50px;
 `;
 
 const Content = styled.div`
@@ -54,8 +57,12 @@ const Content = styled.div`
   margin: 5px;
 `;
 
-const Title = styled.h3`
+const Name = styled.h2`
   margin: 0px;
 `;
 
-export default courseCard;
+const Code = styled.h3`
+  margin: 0px;
+`;
+
+export default CourseCard;

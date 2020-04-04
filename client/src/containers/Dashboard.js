@@ -18,8 +18,10 @@ const Dashboard = ({
     getCurrentUsersCourses();
   }, []);
 
+  console.log(courses);
+
   let renderCards = courses.map(course => {
-    return <CourseCard course={course} />;
+    return <CourseCard key={course._id} course={course} />;
   });
 
   return loading && courses === null ? (
