@@ -35,6 +35,12 @@ const CoursePage = ({
         <h2>{currentCourse.code}</h2>
       </Header>
       <HorizontalWrapper>
+        <Link to='/create-deliverable'>
+          <Button id='edit-course' title='Edit Course' secondary />
+        </Link>
+        <DeleteButton id='delete-course'>Delete Course</DeleteButton>
+      </HorizontalWrapper>
+      <HorizontalWrapper>
         <VerticalWrapper>
           <h2>{currentCourse.gradeletter}</h2>
           <h3>Grade Letter</h3>
@@ -50,9 +56,9 @@ const CoursePage = ({
       </HorizontalWrapper>
       {courses !== null && courses.length > 0 ? ( //change this to deliverables
         <Container>
-          <Link to='/create-course'>
+          <Link to='/create-deliverable'>
             <Button
-              id='button-deliverable'
+              id='create-deliverable'
               title='Create Deliverable'
               primary
             />
@@ -146,6 +152,22 @@ const Header = styled.div`
     margin-right: auto;
     margin-top: 0.2rem;
   }
+`;
+
+const DeleteButton = styled.div`
+  background: red;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  border-radius: 200px;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  cursor: pointer;
 `;
 
 const mapStateToProps = state => ({
