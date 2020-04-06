@@ -12,7 +12,7 @@ import Button from '../components/Button';
 const CoursePage = ({
   //getDeliverables,
   auth: { user },
-  course: { courses, loading },
+  course: { courses },
   match: {
     params: { id }
   }
@@ -34,8 +34,22 @@ const CoursePage = ({
         <hr />
         <h2>{currentCourse.code}</h2>
       </Header>
+      <HorizontalWrapper>
+        <VerticalWrapper>
+          <h2>{currentCourse.gradeletter}</h2>
+          <h3>Grade Letter</h3>
+        </VerticalWrapper>
+        <VerticalWrapper>
+          <h2>{currentCourse.grade}</h2>
+          <h3>Grade Percentage</h3>
+        </VerticalWrapper>
+        <VerticalWrapper>
+          <h2>{currentCourse.percentcomplete}</h2>
+          <h3>Course Completion</h3>
+        </VerticalWrapper>
+      </HorizontalWrapper>
       {courses !== null && courses.length > 0 ? ( //change this to deliverables
-        <Container>
+        <DeliverablesContainer>
           <Link to='/create-course'>
             <Button
               id='button-deliverable'
@@ -44,7 +58,7 @@ const CoursePage = ({
             />
           </Link>
           {/* <CoursesContainer>{renderCards}</CoursesContainer> */}
-        </Container>
+        </DeliverablesContainer>
       ) : (
         <Fragment>
           <p>
@@ -61,7 +75,6 @@ const CoursePage = ({
 };
 
 CoursePage.propTypes = {
-  getCurrentUsersCourses: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   course: PropTypes.object.isRequired
 };
@@ -74,9 +87,25 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const CoursesContainer = styled.div`
+const VerticalWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  height: 50px;
+  width: 200px;
+`;
+
+const HorizontalWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between:
+    width: 100%;
+`;
+
+const DeliverablesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 20px;
