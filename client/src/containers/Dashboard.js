@@ -20,9 +20,12 @@ const Dashboard = ({
 
   console.log(courses);
 
-  let renderCards = courses.map(course => {
-    return <CourseCard key={course._id} course={course} />;
-  });
+  let renderCards =
+    courses.length > 0
+      ? courses.map(course => {
+          return <CourseCard key={course._id} course={course} />;
+        })
+      : '';
 
   return loading && courses === null ? (
     <Spinner />
