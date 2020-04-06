@@ -35,13 +35,13 @@ const Dashboard = ({
         <h1>Dashboard</h1>
         <hr />
       </Header>
-      <p> Welcome {user && user.name} </p>
-      {courses !== null ? (
+      <h3 style={{ marginBottom: '10px' }}> Welcome {user && user.name} </h3>
+      {courses !== null && courses.length > 0 ? (
         <Container>
           <Link to='/create-course'>
             <Button id='button-createCourse' title='Create Course' primary />
           </Link>
-          <CausesContainer>{renderCards}</CausesContainer>
+          <CoursesContainer>{renderCards}</CoursesContainer>
         </Container>
       ) : (
         <Fragment>
@@ -67,7 +67,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const CausesContainer = styled.div`
+const CoursesContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
