@@ -7,7 +7,7 @@ import Spinner from '../components/Spinner';
 import colors from '../styles/colors';
 import styled from 'styled-components';
 import Button from '../components/Button';
-//import DeliverableCard from '../components/DeliverableCard';
+import DeliverableCard from '../components/DeliverableCard';
 
 const CoursePage = ({
   //getDeliverables,
@@ -49,7 +49,7 @@ const CoursePage = ({
         </VerticalWrapper>
       </HorizontalWrapper>
       {courses !== null && courses.length > 0 ? ( //change this to deliverables
-        <DeliverablesContainer>
+        <Container>
           <Link to='/create-course'>
             <Button
               id='button-deliverable'
@@ -57,8 +57,21 @@ const CoursePage = ({
               primary
             />
           </Link>
-          {/* <CoursesContainer>{renderCards}</CoursesContainer> */}
-        </DeliverablesContainer>
+          <DeliverablesContainer>
+            <DeliverableCard
+              deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
+            />
+            <DeliverableCard
+              deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
+            />
+            <DeliverableCard
+              deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
+            />
+            <DeliverableCard
+              deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
+            />
+          </DeliverablesContainer>
+        </Container>
       ) : (
         <Fragment>
           <p>

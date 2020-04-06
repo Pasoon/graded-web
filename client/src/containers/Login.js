@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../actions/auth';
 import axios from 'axios';
+import DeliverableCard from '../components/DeliverableCard';
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -34,6 +35,9 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
+      <DeliverableCard
+        deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
+      />
       <FormContainer>
         <InputContainer>
           <Input
