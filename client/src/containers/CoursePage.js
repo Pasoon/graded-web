@@ -10,8 +10,7 @@ import Button from '../components/Button';
 import DeliverableCard from '../components/DeliverableCard';
 
 const CoursePage = ({
-  //getDeliverables,
-  auth: { user },
+  //getDeliverables
   course: { courses },
   match: {
     params: { id }
@@ -20,12 +19,9 @@ const CoursePage = ({
   const [currentCourse, setCurrentCourse] = useState(null);
   useEffect(() => {
     //getDeliverables();
-    console.log(id + ' / ' + courses);
-    const currentCourse = courses.find(course => course._id === id);
-    setCurrentCourse(currentCourse);
+    const result = courses.find(course => course._id === id);
+    setCurrentCourse(result);
   }, []);
-
-  console.log(currentCourse);
 
   return currentCourse ? (
     <Container>
@@ -35,7 +31,7 @@ const CoursePage = ({
         <h2>{currentCourse.code}</h2>
       </Header>
       <HorizontalWrapper>
-        <Link to='/create-deliverable'>
+        <Link to={'/edit-course/' + currentCourse._id}>
           <Button id='edit-course' title='Edit Course' secondary />
         </Link>
         <DeleteButton id='delete-course'>Delete Course</DeleteButton>
@@ -94,7 +90,6 @@ const CoursePage = ({
 };
 
 CoursePage.propTypes = {
-  auth: PropTypes.object.isRequired,
   course: PropTypes.object.isRequired
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import styled from 'styled-components';
@@ -6,13 +6,31 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import colors from '../styles/colors';
 import PropTypes from 'prop-types';
-import { createCourse } from '../actions/course';
+import { editCourse } from '../actions/course';
 
-const EditCourse = ({ createCourse, history }) => {
+const EditCourse = ({
+  editCourse,
+  course: { courses },
+  history,
+  match: {
+    params: { id }
+  }
+}) => {
   const [formData, setFormData] = useState({
     name: '',
     code: ''
   });
+
+  const [currentCourse, setCurrentCourse] = useState(null);
+
+  useEffect(() => {
+    const result = courses.find(course => course._id === id);
+    setCurrentCourse(result);
+    setFormData({
+      name: currentCourse ? currentCourse.name : '',
+      code: currentCourse ? currentCourse.code : ''
+    });
+  }, [currentCourse !== null]);
 
   const { name, code } = formData;
 
@@ -24,13 +42,13 @@ const EditCourse = ({ createCourse, history }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    createCourse(formData, history);
+    editCourse(formData, currentCourse._id, history);
   };
 
   return (
     <Container>
       <Header>
-        <h1>Edit Course</h1>
+        <h1>{'Edit ' + (currentCourse ? currentCourse.name : 'Course')}</h1>
         <hr />
       </Header>
       <FormContainer>
@@ -53,9 +71,9 @@ const EditCourse = ({ createCourse, history }) => {
           />
         </InputContainer>
         <Button
-          id='button-createCause'
+          id='button-updateCause'
           primary
-          title='Create'
+          title='Update'
           handleClick={e => onSubmit(e)}
         ></Button>
       </FormContainer>
@@ -110,8 +128,11 @@ const InputContainer = styled.div`
 `;
 
 EditCourse.propTypes = {
-  createCourse: PropTypes.func.isRequired,
   course: PropTypes.object.isRequired
 };
 
-export default connect(null, { createCourse })(withRouter(EditCourse));
+const mapStateToProps = state => ({
+  course: state.course
+});
+
+export default connect(mapStateToProps, { editCourse })(withRouter(EditCourse));
