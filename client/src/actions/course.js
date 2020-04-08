@@ -52,7 +52,7 @@ export const editCourse = (formData, courseId, history) => async dispatch => {
         'Content-Type': 'application/json'
       }
     };
-    const res = await axios.patch('/api/courses/' + courseId, formData, config);
+    const res = await axios.patch(`/api/courses/${courseId}`, formData, config);
 
     dispatch({
       type: GET_COURSES,
@@ -60,7 +60,28 @@ export const editCourse = (formData, courseId, history) => async dispatch => {
     });
 
     alert('Course Updated!'); //here you would actually dispatch setAlert function
-    history.push('/dashboard');
+    history.push('/dashboard/');
+  } catch (err) {
+    dispatch({
+      type: COURSE_ERROR,
+      payload: { msg: err.response, status: err.response }
+    });
+  }
+};
+
+//Delete a Course
+export const deleteCourse = (courseId, history) => async dispatch => {
+  try {
+    console.log(courseId);
+    const res = await axios.delete(`/api/courses/${courseId}`);
+
+    dispatch({
+      type: GET_COURSES,
+      payload: res.data
+    });
+
+    alert('Course Deleted!'); //here you would actually dispatch setAlert function
+    history.push('/dashboard/');
   } catch (err) {
     dispatch({
       type: COURSE_ERROR,

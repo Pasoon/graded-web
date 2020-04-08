@@ -8,10 +8,12 @@ import colors from '../styles/colors';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import DeliverableCard from '../components/DeliverableCard';
-
+import { deleteCourse } from '../actions/course';
 const CoursePage = ({
   //getDeliverables
+  deleteCourse,
   course: { courses },
+  history,
   match: {
     params: { id }
   }
@@ -22,6 +24,14 @@ const CoursePage = ({
     const result = courses.find(course => course._id === id);
     setCurrentCourse(result);
   }, []);
+
+  const onDelete = async e => {
+    e.preventDefault();
+    if (window.confirm('Are you sure you wish to delete this course?')) {
+      console.log(currentCourse._id);
+      deleteCourse(currentCourse._id, history);
+    }
+  };
 
   return currentCourse ? (
     <Container>
@@ -34,7 +44,9 @@ const CoursePage = ({
         <Link to={'/edit-course/' + currentCourse._id}>
           <Button id='edit-course' title='Edit Course' secondary />
         </Link>
-        <DeleteButton id='delete-course'>Delete Course</DeleteButton>
+        <DeleteButton id='delete-course' onClick={e => onDelete(e)}>
+          Delete Course
+        </DeleteButton>
       </HorizontalWrapper>
       <HorizontalWrapper>
         <VerticalWrapper>
@@ -170,4 +182,4 @@ const mapStateToProps = state => ({
   course: state.course
 });
 
-export default connect(mapStateToProps, null)(CoursePage);
+export default connect(mapStateToProps, { deleteCourse })(CoursePage);
