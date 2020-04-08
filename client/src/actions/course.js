@@ -89,3 +89,24 @@ export const deleteCourse = (courseId, history) => async dispatch => {
     });
   }
 };
+
+//Update a courses grade
+// export const updateGrade = (course) => async dispatch => {
+//   try {
+//     console.log(courseId);
+//     const res = await axios.delete(`/api/courses/${courseId}`);
+
+//     dispatch({
+//       type: GET_COURSES,
+//       payload: res.data
+//     });
+
+//     alert('Course Deleted!'); //here you would actually dispatch setAlert function
+//     history.push('/dashboard/');
+//   } catch (err) {
+//     dispatch({
+//       type: COURSE_ERROR,
+//       payload: { msg: err.response, status: err.response }
+//     });
+//   }
+// };
