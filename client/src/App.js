@@ -10,6 +10,7 @@ import CreateCourse from './containers/CreateCourse';
 import EditCourse from './containers/EditCourse';
 import CoursePage from './containers/CoursePage';
 import PrivateRoute from './routing/PrivateRoute';
+import CreateDeliverable from './containers/CreateDeliverable';
 
 import './App.css';
 
@@ -54,6 +55,11 @@ const App = () => {
                 exact
                 path='/course-page/:id'
                 component={CoursePage}
+              />
+              <PrivateRoute
+                exact
+                path='/create-deliverable/:id'
+                component={CreateDeliverable}
               />
             </Switch>
           </section>

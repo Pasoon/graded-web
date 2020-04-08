@@ -17,9 +17,6 @@ router.post(
     check('name', 'Deliverable name is required')
       .not()
       .isEmpty(),
-    check('type', 'Deliverable Type is required')
-      .not()
-      .isEmpty(),
     check('weight', 'Deliverable Weight is required')
       .not()
       .isEmpty()
@@ -35,6 +32,7 @@ router.post(
         name: req.body.name,
         type: req.body.type,
         weight: req.body.weight,
+        grade: req.body.grade,
         course: req.params.courseId
       });
 

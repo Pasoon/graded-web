@@ -88,7 +88,7 @@ export const editDeliverable = (
 //Delete a Deliverable
 export const deleteDeliverable = (deliverableId, history) => async dispatch => {
   try {
-    console.log(courseId);
+    console.log(deliverableId);
     const res = await axios.delete(`/api/deliverables/${deliverableId}`);
 
     dispatch({

@@ -9,10 +9,12 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import DeliverableCard from '../components/DeliverableCard';
 import { deleteCourse } from '../actions/course';
+import { getDeliverables } from '../actions/deliverable';
 const CoursePage = ({
-  //getDeliverables
+  getDeliverables,
   deleteCourse,
   course: { courses },
+  deliverable: { deliverables },
   history,
   match: {
     params: { id }
@@ -20,9 +22,9 @@ const CoursePage = ({
 }) => {
   const [currentCourse, setCurrentCourse] = useState(null);
   useEffect(() => {
-    //getDeliverables();
     const result = courses.find(course => course._id === id);
     setCurrentCourse(result);
+    getDeliverables(id);
   }, []);
 
   const onDelete = async e => {
@@ -32,6 +34,16 @@ const CoursePage = ({
       deleteCourse(currentCourse._id, history);
     }
   };
+
+  let renderDeliverables = deliverables // checking if deliverables exists, if it does, check to see if length > 0 and then render it
+    ? deliverables.length > 0
+      ? deliverables.map(deliverable => {
+          return (
+            <DeliverableCard key={deliverable._id} deliverable={deliverable} />
+          );
+        })
+      : ''
+    : '';
 
   return currentCourse ? (
     <Container>
@@ -54,37 +66,24 @@ const CoursePage = ({
           <h3>Grade Letter</h3>
         </VerticalWrapper>
         <VerticalWrapper>
-          <h2>{currentCourse.grade}</h2>
+          <h2>{currentCourse.grade + '%'}</h2>
           <h3>Grade Percentage</h3>
         </VerticalWrapper>
         <VerticalWrapper>
-          <h2>{currentCourse.percentcomplete}</h2>
+          <h2>{currentCourse.percentcomplete + '%'}</h2>
           <h3>Course Completion</h3>
         </VerticalWrapper>
       </HorizontalWrapper>
       {courses !== null && courses.length > 0 ? ( //change this to deliverables
         <Container>
-          <Link to='/create-deliverable'>
+          <Link to={'/create-deliverable/' + id}>
             <Button
               id='create-deliverable'
               title='Create Deliverable'
               primary
             />
           </Link>
-          <DeliverablesContainer>
-            <DeliverableCard
-              deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
-            />
-            <DeliverableCard
-              deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
-            />
-            <DeliverableCard
-              deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
-            />
-            <DeliverableCard
-              deliverable={{ name: 'Assignment', weight: '15%', grade: '90%' }}
-            />
-          </DeliverablesContainer>
+          <DeliverablesContainer>{renderDeliverables}</DeliverablesContainer>
         </Container>
       ) : (
         <Fragment>
@@ -92,7 +91,7 @@ const CoursePage = ({
             You have not yet added any deliverables to this course, please
             create one
           </p>
-          <Link to='/create-deliverable'>Create a Deliverable</Link>
+          <Link to={'/create-deliverable/' + id}>Create a Deliverable</Link>
         </Fragment>
       )}
     </Container>
@@ -102,7 +101,12 @@ const CoursePage = ({
 };
 
 CoursePage.propTypes = {
-  course: PropTypes.object.isRequired
+  getDeliverables: PropTypes.func.isRequired,
+  deleteCourse: PropTypes.func.isRequired,
+  course: PropTypes.object.isRequired,
+  deliverable: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 };
 
 const Container = styled.div`
@@ -179,7 +183,10 @@ const DeleteButton = styled.div`
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  course: state.course
+  course: state.course,
+  deliverable: state.deliverable
 });
 
-export default connect(mapStateToProps, { deleteCourse })(CoursePage);
+export default connect(mapStateToProps, { deleteCourse, getDeliverables })(
+  CoursePage
+);

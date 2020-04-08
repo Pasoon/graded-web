@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 import { GET_COURSES, COURSE_ERROR } from './constants';
+import getGradeLetter from '../utils/getGradeLetter';
 
 //Get Current Users Courses
 export const getCurrentUsersCourses = () => async dispatch => {
@@ -45,7 +46,12 @@ export const createCourse = (formData, history) => async dispatch => {
 };
 
 //Edit a Course
-export const editCourse = (formData, courseId, history) => async dispatch => {
+export const editCourse = (
+  formData,
+  courseId,
+  history,
+  gradeUpdate = false
+) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -60,7 +66,9 @@ export const editCourse = (formData, courseId, history) => async dispatch => {
     });
 
     alert('Course Updated!'); //here you would actually dispatch setAlert function
-    history.push('/dashboard/');
+    if (!gradeUpdate) {
+      history.push('/dashboard/');
+    }
   } catch (err) {
     dispatch({
       type: COURSE_ERROR,
@@ -91,22 +99,23 @@ export const deleteCourse = (courseId, history) => async dispatch => {
 };
 
 //Update a courses grade
-// export const updateGrade = (course) => async dispatch => {
-//   try {
-//     console.log(courseId);
-//     const res = await axios.delete(`/api/courses/${courseId}`);
+export const updateGrade = (course, history) => async => {
+  const deliverables = course.deliverables;
+  const sum = 0;
+  const grade = 0;
+  const gradeLetter = '';
 
-//     dispatch({
-//       type: GET_COURSES,
-//       payload: res.data
-//     });
+  deliverables.forEach(deliverable => {
+    sum += deliverable.grade;
+  });
 
-//     alert('Course Deleted!'); //here you would actually dispatch setAlert function
-//     history.push('/dashboard/');
-//   } catch (err) {
-//     dispatch({
-//       type: COURSE_ERROR,
-//       payload: { msg: err.response, status: err.response }
-//     });
-//   }
-// };
+  grade = sum / deliverables.length;
+  gradeLetter = getGradeLetter(grade);
+
+  const formData = {
+    grade: grade,
+    gradeletter: gradeLetter
+  };
+
+  editCourse(formData, course._id, history, true);
+};

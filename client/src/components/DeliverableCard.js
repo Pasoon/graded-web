@@ -16,7 +16,7 @@ const DeliverableCard = ({ deliverable }) => {
           alignItems: 'center'
         }}
       >
-        <Grade>{deliverable.grade}</Grade>
+        <Grade>{deliverable.grade + '%'}</Grade>
         <Delete>x</Delete>
       </div>
     </Container>

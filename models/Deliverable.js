@@ -10,8 +10,7 @@ const DeliverableSchema = new mongoose.Schema({
     required: true
   },
   type: {
-    type: String,
-    required: true
+    type: String
   },
   grade: {
     type: Number,
