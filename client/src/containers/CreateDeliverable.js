@@ -7,9 +7,12 @@ import { connect } from 'react-redux';
 import colors from '../styles/colors';
 import PropTypes from 'prop-types';
 import { createDeliverable } from '../actions/deliverable';
+import { updateGrade } from '../actions/course';
 
 const CreateDeliverable = ({
+  updateGrade,
   createDeliverable,
+  course: { courses },
   history,
   match: {
     params: { id }
@@ -32,6 +35,8 @@ const CreateDeliverable = ({
   const onSubmit = async e => {
     e.preventDefault();
     createDeliverable(formData, id, history);
+    const course = courses.find(course => course._id === id);
+    updateGrade(course, history);
   };
 
   return (
@@ -57,6 +62,8 @@ const CreateDeliverable = ({
             name='weight'
             placeholder='Deliverable Weight'
             value={weight}
+            min='1'
+            max='100'
             type='number'
             onChange={e => onChange(e)}
           />
@@ -68,6 +75,8 @@ const CreateDeliverable = ({
             name='grade'
             placeholder='Deliverable Grade'
             value={grade}
+            min='1'
+            max='100'
             type='number'
             onChange={e => onChange(e)}
           />
@@ -130,9 +139,15 @@ const InputContainer = styled.div`
 `;
 
 CreateDeliverable.propTypes = {
-  createDeliverable: PropTypes.func.isRequired
+  createDeliverable: PropTypes.func.isRequired,
+  updateGrade: PropTypes.func.isRequired
 };
 
-export default connect(null, { createDeliverable })(
+const mapStateToProps = state => ({
+  course: state.course,
+  deliverable: state.deliverable
+});
+
+export default connect(mapStateToProps, { createDeliverable, updateGrade })(
   withRouter(CreateDeliverable)
 );

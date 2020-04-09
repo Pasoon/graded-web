@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import Button from '../components/Button';
 import DeliverableCard from '../components/DeliverableCard';
 import { deleteCourse } from '../actions/course';
-import { getDeliverables } from '../actions/deliverable';
+import { getDeliverables, deleteDeliverable } from '../actions/deliverable';
 const CoursePage = ({
   getDeliverables,
   deleteCourse,
@@ -25,7 +25,7 @@ const CoursePage = ({
     const result = courses.find(course => course._id === id);
     setCurrentCourse(result);
     getDeliverables(id);
-  }, []);
+  }, [deliverables, courses]);
 
   const onDelete = async e => {
     e.preventDefault();

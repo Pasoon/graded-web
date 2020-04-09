@@ -95,9 +95,6 @@ export const deleteDeliverable = (deliverableId, history) => async dispatch => {
       type: GET_DELIVERABLES,
       payload: res.data
     });
-
-    alert('Deliverable Deleted!'); //here you would actually dispatch setAlert function
-    history.goBack();
   } catch (err) {
     dispatch({
       type: DELIVERABLE_ERROR,

@@ -1,10 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import colors from '../styles/colors';
-import { Redirect, Link } from 'react-router-dom';
+import { deleteDeliverable } from '../actions/deliverable';
+import { connect } from 'react-redux';
 
-const DeliverableCard = ({ deliverable }) => {
+const DeliverableCard = ({ deleteDeliverable, deliverable, history }) => {
+  const onDelete = async e => {
+    e.preventDefault();
+    if (window.confirm('Are you sure you wish to delete this deliverable?')) {
+      console.log(deliverable._id);
+      deleteDeliverable(deliverable._id, history);
+    }
+  };
+
   return (
     <Container>
       <Name>{deliverable.name}</Name>
@@ -17,7 +25,7 @@ const DeliverableCard = ({ deliverable }) => {
         }}
       >
         <Grade>{deliverable.grade + '%'}</Grade>
-        <Delete>x</Delete>
+        <Delete onClick={e => onDelete(e)}>x</Delete>
       </div>
     </Container>
   );
@@ -55,4 +63,4 @@ const Delete = styled.h4`
   font-size: 20px;
 `;
 
-export default DeliverableCard;
+export default connect(null, { deleteDeliverable })(DeliverableCard);

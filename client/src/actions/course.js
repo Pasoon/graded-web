@@ -101,16 +101,21 @@ export const deleteCourse = (courseId, history) => async dispatch => {
 //Update a courses grade
 export const updateGrade = (course, history) => async => {
   const deliverables = course.deliverables;
-  const sum = 0;
-  const grade = 0;
-  const gradeLetter = '';
+  let sum = 0;
+  let grade = 0;
+  let gradeLetter = '';
 
   deliverables.forEach(deliverable => {
     sum += deliverable.grade;
   });
 
+  console.log(sum);
+
   grade = sum / deliverables.length;
   gradeLetter = getGradeLetter(grade);
+
+  console.log(grade);
+  console.log(gradeLetter);
 
   const formData = {
     grade: grade,
