@@ -2,13 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { deleteDeliverable } from '../actions/deliverable';
+import { updateGrade } from '../actions/course';
 import { connect } from 'react-redux';
 
-const DeliverableCard = ({ deleteDeliverable, deliverable, history }) => {
+const DeliverableCard = ({
+  deleteDeliverable,
+  updateGrade,
+  deliverable,
+  history
+}) => {
   const onDelete = async e => {
     e.preventDefault();
     if (window.confirm('Are you sure you wish to delete this deliverable?')) {
-      console.log(deliverable._id);
       deleteDeliverable(deliverable._id, history);
     }
   };

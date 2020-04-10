@@ -4,7 +4,8 @@ import {
   COURSE_ERROR,
   ADD_COURSE,
   DELETE_COURSE,
-  GET_COURSE
+  GET_COURSE,
+  UPDATE_GRADE
 } from '../actions/constants';
 
 const initialState = {
@@ -39,6 +40,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         courses: state.courses.filter(course => course._id != payload),
+        loading: false
+      };
+    case UPDATE_GRADE:
+      return {
+        ...state,
+        course: {
+          ...state.course,
+          gradeletter: payload.gradeletter,
+          grade: payload.grade,
+          percentcomplete: payload.completion
+        },
         loading: false
       };
     case COURSE_ERROR:

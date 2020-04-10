@@ -5,7 +5,8 @@ import {
   COURSE_ERROR,
   DELETE_COURSE,
   ADD_COURSE,
-  GET_COURSE
+  GET_COURSE,
+  UPDATE_GRADE
 } from './constants';
 import getGradeLetter from '../utils/getGradeLetter';
 
@@ -151,5 +152,22 @@ export const updateGrade = (
     percentcomplete: completion
   };
 
-  dispatch(editCourse(formData, courseId, history, true));
+  dispatch({
+    type: UPDATE_GRADE,
+    payload: formData
+  });
+
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const res = await axios.patch(`/api/courses/${courseId}`, formData, config);
+  } catch (err) {
+    dispatch({
+      type: COURSE_ERROR,
+      payload: { msg: err.response, status: err.response }
+    });
+  }
 };

@@ -27,12 +27,11 @@ const CoursePage = ({
     getCourse(id);
     getDeliverables(id);
     updateGrade(deliverables, id, history);
-  }, [getDeliverables, id]);
+  }, [getCourse, id]);
 
   const onDelete = async e => {
     e.preventDefault();
     if (window.confirm('Are you sure you wish to delete this course?')) {
-      console.log(course._id);
       deleteCourse(course._id, history);
     }
   };

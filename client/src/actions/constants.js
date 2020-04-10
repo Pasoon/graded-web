@@ -15,6 +15,7 @@ export const COURSE_ERROR = 'COURSE_ERROR';
 export const DELETE_COURSE = 'DELETE_COURSE';
 export const ADD_COURSE = 'ADD_COURSE';
 export const GET_COURSE = 'GET_COURSE';
+export const UPDATE_GRADE = 'UPDATE_GRADE';
 
 export const GET_DELIVERABLES = 'GET_DELIVERABLES';
 export const CLEAR_DELIVERABLES = 'CLEAR_DELIVERABLES';
