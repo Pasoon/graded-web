@@ -12,7 +12,7 @@ import { updateGrade } from '../actions/course';
 const CreateDeliverable = ({
   updateGrade,
   createDeliverable,
-  course: { courses },
+  deliverable: { deliverables },
   history,
   match: {
     params: { id }
@@ -35,7 +35,7 @@ const CreateDeliverable = ({
   const onSubmit = async e => {
     e.preventDefault();
     createDeliverable(formData, id, history);
-    //updateGrade(course, history);
+    //updateGrade(deliverables, id, history);
   };
 
   return (

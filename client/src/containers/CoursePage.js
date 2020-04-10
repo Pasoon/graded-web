@@ -26,7 +26,6 @@ const CoursePage = ({
   useEffect(() => {
     getCourse(id);
     getDeliverables(id);
-    updateGrade(deliverables, id, history);
   }, [getCourse, id]);
 
   const onDelete = async e => {
@@ -45,6 +44,8 @@ const CoursePage = ({
         })
       : ''
     : '';
+
+  updateGrade(deliverables, id, history);
 
   return course ? (
     <Container>

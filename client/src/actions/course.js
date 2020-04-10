@@ -135,13 +135,22 @@ export const updateGrade = (
 
   console.log(deliverables);
 
-  deliverables.forEach(deliverable => {
-    completion += deliverable.weight;
-    grades += deliverable.grade * deliverable.weight;
-  });
-
-  grade = grades / completion;
-  gradeLetter = getGradeLetter(grade);
+  if (
+    deliverables !== null &&
+    deliverables !== undefined &&
+    deliverables.length > 0
+  ) {
+    deliverables.forEach(deliverable => {
+      completion += deliverable.weight;
+      grades += deliverable.grade * deliverable.weight;
+    });
+    grade = grades / completion;
+    gradeLetter = getGradeLetter(grade);
+  } else {
+    grade = 0;
+    gradeLetter = 'N/A';
+    completion = 0;
+  }
 
   console.log(grade);
   console.log(gradeLetter);
@@ -152,11 +161,6 @@ export const updateGrade = (
     percentcomplete: completion
   };
 
-  dispatch({
-    type: UPDATE_GRADE,
-    payload: formData
-  });
-
   try {
     const config = {
       headers: {
@@ -164,6 +168,11 @@ export const updateGrade = (
       }
     };
     const res = await axios.patch(`/api/courses/${courseId}`, formData, config);
+
+    dispatch({
+      type: UPDATE_GRADE,
+      payload: formData
+    });
   } catch (err) {
     dispatch({
       type: COURSE_ERROR,
