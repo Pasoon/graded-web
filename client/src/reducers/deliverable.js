@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
     case ADD_DELIVERABLE:
       return {
         ...state,
-        deliverables: [...state.deliverables, payload],
+        deliverables: [payload, ...state.deliverables],
         loading: false
       };
     case DELETE_DELIVERABLE:

@@ -7,35 +7,33 @@ import colors from '../styles/colors';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import DeliverableCard from '../components/DeliverableCard';
-import { deleteCourse } from '../actions/course';
+import { getCourse, deleteCourse } from '../actions/course';
 import { getDeliverables } from '../actions/deliverable';
 import { updateGrade } from '../actions/course';
 
 const CoursePage = ({
-  getDeliverables,
+  getCourse,
+  deleteCourse,
   updateGrade,
-  course: { courses },
+  course: { course, loading },
+  getDeliverables,
   deliverable: { deliverables },
   history,
   match: {
     params: { id }
   }
 }) => {
-  const [currentCourse, setCurrentCourse] = useState(null);
   useEffect(() => {
-    const result = courses ? courses.find(course => course._id === id) : '';
-
-    setCurrentCourse(result);
+    getCourse(id);
     getDeliverables(id);
-    console.log(result);
-    //updateGrade(deliverables, id, history);
+    updateGrade(deliverables, id, history);
   }, [getDeliverables, id]);
 
   const onDelete = async e => {
     e.preventDefault();
     if (window.confirm('Are you sure you wish to delete this course?')) {
-      console.log(currentCourse._id);
-      deleteCourse(currentCourse._id, history);
+      console.log(course._id);
+      deleteCourse(course._id, history);
     }
   };
 
@@ -49,15 +47,15 @@ const CoursePage = ({
       : ''
     : '';
 
-  return currentCourse ? (
+  return course ? (
     <Container>
       <Header>
-        <h1>{currentCourse.name}</h1>
+        <h1>{course.name}</h1>
         <hr />
-        <h2>{currentCourse.code}</h2>
+        <h2>{course.code}</h2>
       </Header>
       <HorizontalWrapper>
-        <Link to={'/edit-course/' + currentCourse._id}>
+        <Link to={'/edit-course/' + course._id}>
           <Button id='edit-course' title='Edit Course' secondary />
         </Link>
         <DeleteButton id='delete-course' onClick={e => onDelete(e)}>
@@ -66,15 +64,15 @@ const CoursePage = ({
       </HorizontalWrapper>
       <HorizontalWrapper>
         <VerticalWrapper>
-          <h2>{currentCourse.gradeletter}</h2>
+          <h2>{course.gradeletter}</h2>
           <h3>Grade Letter</h3>
         </VerticalWrapper>
         <VerticalWrapper>
-          <h2>{currentCourse.grade + '%'}</h2>
+          <h2>{course.grade + '%'}</h2>
           <h3>Grade Percentage</h3>
         </VerticalWrapper>
         <VerticalWrapper>
-          <h2>{currentCourse.percentcomplete + '%'}</h2>
+          <h2>{course.percentcomplete + '%'}</h2>
           <h3>Course Completion</h3>
         </VerticalWrapper>
       </HorizontalWrapper>
@@ -105,10 +103,11 @@ const CoursePage = ({
 };
 
 CoursePage.propTypes = {
-  getDeliverables: PropTypes.func.isRequired,
-  updateGrade: PropTypes.func.isRequired,
+  getCourse: PropTypes.func.isRequired,
   deleteCourse: PropTypes.func.isRequired,
+  updateGrade: PropTypes.func.isRequired,
   course: PropTypes.object.isRequired,
+  getDeliverables: PropTypes.func.isRequired,
   deliverable: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
@@ -193,6 +192,7 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
+  getCourse,
   deleteCourse,
   getDeliverables,
   updateGrade

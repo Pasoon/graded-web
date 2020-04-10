@@ -1,4 +1,11 @@
-import { GET_COURSES, CLEAR_COURSES, COURSE_ERROR } from '../actions/constants';
+import {
+  GET_COURSES,
+  CLEAR_COURSES,
+  COURSE_ERROR,
+  ADD_COURSE,
+  DELETE_COURSE,
+  GET_COURSE
+} from '../actions/constants';
 
 const initialState = {
   course: null,
@@ -15,6 +22,23 @@ export default function(state = initialState, action) {
       return {
         ...state,
         courses: payload,
+        loading: false
+      };
+    case GET_COURSE:
+      return {
+        ...state,
+        course: payload,
+        loading: false
+      };
+    case ADD_COURSE:
+      return {
+        ...state,
+        courses: [payload, ...state.courses]
+      };
+    case DELETE_COURSE:
+      return {
+        ...state,
+        courses: state.courses.filter(course => course._id != payload),
         loading: false
       };
     case COURSE_ERROR:

@@ -25,6 +25,26 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
+// @route    GET api/courses/:id
+// @desc     Get course by ID
+// @access   Private
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+
+    // Check for ObjectId format and course
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/) || !course) {
+      return res.status(404).json({ msg: 'Course not found' });
+    }
+
+    res.json(course);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route   POST api/courses/
 // @desc    Create course
 // @access  Private

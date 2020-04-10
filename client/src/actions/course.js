@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_COURSES, COURSE_ERROR } from './constants';
+import {
+  GET_COURSES,
+  COURSE_ERROR,
+  DELETE_COURSE,
+  ADD_COURSE,
+  GET_COURSE
+} from './constants';
 import getGradeLetter from '../utils/getGradeLetter';
 
 //Get Current Users Courses
@@ -10,6 +16,23 @@ export const getCurrentUsersCourses = () => async dispatch => {
 
     dispatch({
       type: GET_COURSES,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: COURSE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+//Get Course by ID
+export const getCourse = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/courses/${id}`);
+
+    dispatch({
+      type: GET_COURSE,
       payload: res.data
     });
   } catch (err) {
@@ -31,7 +54,7 @@ export const createCourse = (formData, history) => async dispatch => {
     const res = await axios.post('/api/courses', formData, config);
 
     dispatch({
-      type: GET_COURSES,
+      type: ADD_COURSE,
       payload: res.data
     });
 
@@ -84,8 +107,8 @@ export const deleteCourse = (courseId, history) => async dispatch => {
     const res = await axios.delete(`/api/courses/${courseId}`);
 
     dispatch({
-      type: GET_COURSES,
-      payload: res.data
+      type: DELETE_COURSE,
+      payload: courseId
     });
 
     alert('Course Deleted!'); //here you would actually dispatch setAlert function
