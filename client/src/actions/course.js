@@ -104,7 +104,6 @@ export const editCourse = (
 //Delete a Course
 export const deleteCourse = (courseId, history) => async dispatch => {
   try {
-    console.log(courseId);
     const res = await axios.delete(`/api/courses/${courseId}`);
 
     dispatch({
@@ -133,8 +132,6 @@ export const updateGrade = (
   let grade = 0;
   let gradeLetter = '';
 
-  console.log(deliverables);
-
   if (
     deliverables !== null &&
     deliverables !== undefined &&
@@ -152,13 +149,10 @@ export const updateGrade = (
     completion = 0;
   }
 
-  console.log(grade);
-  console.log(gradeLetter);
-
   const formData = {
     grade: Math.round(grade * 10) / 10,
     gradeletter: gradeLetter,
-    percentcomplete: completion
+    completion: completion
   };
 
   try {
@@ -168,7 +162,6 @@ export const updateGrade = (
       }
     };
     const res = await axios.patch(`/api/courses/${courseId}`, formData, config);
-
     dispatch({
       type: UPDATE_GRADE,
       payload: formData

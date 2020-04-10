@@ -21,7 +21,7 @@ const CourseSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  percentcomplete: {
+  completion: {
     type: Number,
     default: 0
   },

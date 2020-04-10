@@ -46,7 +46,6 @@ const CoursePage = ({
     : '';
 
   updateGrade(deliverables, id, history);
-
   return course ? (
     <Container>
       <Header>
@@ -72,7 +71,7 @@ const CoursePage = ({
           <h3>Grade Percentage</h3>
         </VerticalWrapper>
         <VerticalWrapper>
-          <h2>{course.percentcomplete + '%'}</h2>
+          <h2>{course.completion + '%'}</h2>
           <h3>Course Completion</h3>
         </VerticalWrapper>
       </HorizontalWrapper>

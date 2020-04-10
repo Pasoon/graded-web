@@ -125,8 +125,7 @@ router.patch('/:id', [auth], async (req, res) => {
     if (req.body.code) body.code = req.body.code;
     if (req.body.grade) body.grade = req.body.grade;
     if (req.body.gradeletter) body.gradeletter = req.body.gradeletter;
-    if (req.body.percentcomplete)
-      body.percentcomplete = req.body.percentcomplete;
+    if (req.body.completion) body.completion = req.body.completion;
 
     const updatedCourse = await Course.findByIdAndUpdate(req.params.id, body, {
       new: true

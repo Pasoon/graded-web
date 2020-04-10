@@ -16,7 +16,6 @@ const Dashboard = ({
 }) => {
   useEffect(() => {
     getCurrentUsersCourses();
-    console.log(user);
   }, []);
 
   let renderCards = courses // checking if courses exists, if it does, check to see if length > 0 and then render it

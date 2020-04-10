@@ -49,7 +49,7 @@ export default function(state = initialState, action) {
           ...state.course,
           gradeletter: payload.gradeletter,
           grade: payload.grade,
-          percentcomplete: payload.completion
+          completion: payload.completion
         },
         loading: false
       };
