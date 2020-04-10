@@ -35,8 +35,7 @@ const CreateDeliverable = ({
   const onSubmit = async e => {
     e.preventDefault();
     createDeliverable(formData, id, history);
-    const course = courses.find(course => course._id === id);
-    updateGrade(course, history);
+    //updateGrade(course, history);
   };
 
   return (

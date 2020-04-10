@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_DELIVERABLES, DELIVERABLE_ERROR } from './constants';
+import {
+  GET_DELIVERABLES,
+  DELIVERABLE_ERROR,
+  DELETE_DELIVERABLE,
+  ADD_DELIVERABLE
+} from './constants';
 
 //Get Current Courses Deliverables
 export const getDeliverables = courseId => async dispatch => {
@@ -38,7 +43,7 @@ export const createDeliverable = (
     );
 
     dispatch({
-      type: GET_DELIVERABLES,
+      type: ADD_DELIVERABLE,
       payload: res.data
     });
 
@@ -92,8 +97,8 @@ export const deleteDeliverable = (deliverableId, history) => async dispatch => {
     const res = await axios.delete(`/api/deliverables/${deliverableId}`);
 
     dispatch({
-      type: GET_DELIVERABLES,
-      payload: res.data
+      type: DELETE_DELIVERABLE,
+      payload: deliverableId
     });
   } catch (err) {
     dispatch({

@@ -1,5 +1,5 @@
 const getGradeLetter = grade => {
-  const gradeLetter = '';
+  let gradeLetter = '';
   if (grade >= 90) {
     gradeLetter = 'A+';
   }

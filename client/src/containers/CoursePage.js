@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../components/Spinner';
-//import { getCurrentUsersCourses } from '../actions/course';
 import colors from '../styles/colors';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import DeliverableCard from '../components/DeliverableCard';
 import { deleteCourse } from '../actions/course';
-import { getDeliverables, deleteDeliverable } from '../actions/deliverable';
+import { getDeliverables } from '../actions/deliverable';
+import { updateGrade } from '../actions/course';
+
 const CoursePage = ({
   getDeliverables,
-  deleteCourse,
+  updateGrade,
   course: { courses },
   deliverable: { deliverables },
   history,
@@ -22,10 +23,13 @@ const CoursePage = ({
 }) => {
   const [currentCourse, setCurrentCourse] = useState(null);
   useEffect(() => {
-    const result = courses.find(course => course._id === id);
+    const result = courses ? courses.find(course => course._id === id) : '';
+
     setCurrentCourse(result);
     getDeliverables(id);
-  }, [deliverables, courses]);
+    console.log(result);
+    //updateGrade(deliverables, id, history);
+  }, [getDeliverables, id]);
 
   const onDelete = async e => {
     e.preventDefault();
@@ -74,7 +78,7 @@ const CoursePage = ({
           <h3>Course Completion</h3>
         </VerticalWrapper>
       </HorizontalWrapper>
-      {courses !== null && courses.length > 0 ? ( //change this to deliverables
+      {deliverables !== null && deliverables.length > 0 ? ( //change this to deliverables
         <Container>
           <Link to={'/create-deliverable/' + id}>
             <Button
@@ -102,6 +106,7 @@ const CoursePage = ({
 
 CoursePage.propTypes = {
   getDeliverables: PropTypes.func.isRequired,
+  updateGrade: PropTypes.func.isRequired,
   deleteCourse: PropTypes.func.isRequired,
   course: PropTypes.object.isRequired,
   deliverable: PropTypes.object.isRequired,
@@ -187,6 +192,8 @@ const mapStateToProps = state => ({
   deliverable: state.deliverable
 });
 
-export default connect(mapStateToProps, { deleteCourse, getDeliverables })(
-  CoursePage
-);
+export default connect(mapStateToProps, {
+  deleteCourse,
+  getDeliverables,
+  updateGrade
+})(CoursePage);

@@ -65,8 +65,8 @@ export const editCourse = (
       payload: res.data
     });
 
-    alert('Course Updated!'); //here you would actually dispatch setAlert function
     if (!gradeUpdate) {
+      alert('Course Updated!'); //here you would actually dispatch setAlert function
       history.push('/dashboard/');
     }
   } catch (err) {
@@ -99,28 +99,34 @@ export const deleteCourse = (courseId, history) => async dispatch => {
 };
 
 //Update a courses grade
-export const updateGrade = (course, history) => async => {
-  const deliverables = course.deliverables;
-  let sum = 0;
+export const updateGrade = (
+  deliverables,
+  courseId,
+  history
+) => async dispatch => {
+  let grades = 0;
+  let completion = 0;
   let grade = 0;
   let gradeLetter = '';
 
+  console.log(deliverables);
+
   deliverables.forEach(deliverable => {
-    sum += deliverable.grade;
+    completion += deliverable.weight;
+    grades += deliverable.grade * deliverable.weight;
   });
 
-  console.log(sum);
-
-  grade = sum / deliverables.length;
+  grade = grades / completion;
   gradeLetter = getGradeLetter(grade);
 
   console.log(grade);
   console.log(gradeLetter);
 
   const formData = {
-    grade: grade,
-    gradeletter: gradeLetter
+    grade: Math.round(grade * 10) / 10,
+    gradeletter: gradeLetter,
+    percentcomplete: completion
   };
 
-  editCourse(formData, course._id, history, true);
+  dispatch(editCourse(formData, courseId, history, true));
 };
